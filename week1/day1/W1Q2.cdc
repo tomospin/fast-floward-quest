@@ -55,21 +55,24 @@ pub fun drawVerticalBorder(_ width: Int) {
 }
 
 pub resource Printer {
-    pub let collections: [String]
+    pub let collections: [Canvas]
 
     init () {
         self.collections = []
     }      
 
     pub fun print(canvas: Canvas): @Picture? {
-        if (!self.collections.contains(canvas.pixels)) {
-            let picture <- create Picture(canvas: canvas)
-            self.collections.append(canvas.pixels)
-            display(canvas: canvas)
-            return <- picture
-        } else {
-            return nil
+        for collectedCanvas in self.collections {
+            let isSameDimension = collectedCanvas.width == canvas.width && collectedCanvas.height == canvas.height
+            if (isSameDimension && collectedCanvas.pixels == canvas.pixels) {
+                return nil
+            }
         }
+
+        let picture <- create Picture(canvas: canvas)
+        self.collections.append(picture.canvas)
+        display(canvas: picture.canvas)
+        return <- picture
     }
 }
 
