@@ -93,9 +93,9 @@ pub fun main() {
 
     let printer <- create Printer()
     let picture <- printer.print(canvas: canvasX)
-    let picture_duplicate <- printer.print(canvas: canvasX)
+    let pictureDuplicate <- printer.print(canvas: canvasX)
 
     destroy picture
-    destroy picture_duplicate
+    destroy pictureDuplicate
     destroy printer
 }
