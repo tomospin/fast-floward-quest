@@ -55,23 +55,25 @@ pub fun drawVerticalBorder(_ width: Int) {
 }
 
 pub resource Printer {
-    pub let collections: [Canvas]
+    pub let width: Int
+    pub let height: Int
+    pub let collectedPixels: [String]
 
-    init () {
-        self.collections = []
+    init (width: Int, height: Int) {
+        self.width = width
+        self.height = height
+        self.collectedPixels = []
     }      
 
     pub fun print(canvas: Canvas): @Picture? {
-        for collectedCanvas in self.collections {
-            let isSameDimension = collectedCanvas.width == canvas.width && collectedCanvas.height == canvas.height
-            if (isSameDimension && collectedCanvas.pixels == canvas.pixels) {
-                return nil
-            }
+        if (Int(canvas.width) != self.width || Int(canvas.height) != self.height || self.collectedPixels.contains(canvas.pixels)) {
+            return nil
         }
 
         let picture <- create Picture(canvas: canvas)
-        self.collections.append(picture.canvas)
+        self.collectedPixels.append(picture.canvas.pixels)
         display(canvas: picture.canvas)
+
         return <- picture
     }
 }
@@ -91,11 +93,9 @@ pub fun main() {
         pixels: serializeStringArray(pixelsX)
     )
 
-    let printer <- create Printer()
+    let printer <- create Printer(width: 5, height: 5)
     let picture <- printer.print(canvas: canvasX)
-    let pictureDuplicate <- printer.print(canvas: canvasX)
 
     destroy picture
-    destroy pictureDuplicate
     destroy printer
 }
