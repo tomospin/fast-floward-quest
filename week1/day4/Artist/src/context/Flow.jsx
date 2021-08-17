@@ -84,7 +84,7 @@ function Provider(props) {
 
   const createCollection = useCallback(
     async () => {
-        // TODO: Implement the createCollection transaction using "fcl.send".
+        // createCollection transaction
         const transactionId = await fcl
           .send([
             fcl.transaction`
@@ -115,7 +115,7 @@ function Provider(props) {
   );
   const destroyCollection = useCallback(
     async () => {
-      // TODO: Implement the destroyCollection.cdc transaction using "fcl.send".
+      // destroyCollection transaction 
       const transactionId = await fcl
         .send([
           fcl.transaction`
@@ -158,9 +158,7 @@ function Provider(props) {
             ]);
           }
           
-          // TODO: Implement the getCollections.cdc script using "fcl.script", and
-          // the "args" in place for the script's arguments.
-          // Use the "fetchBalance" as an example.
+          // getCollections script
           const collection = await fcl.send([
             fcl.script`
               import LocalArtist from ${process.env.REACT_APP_ARTIST_CONTRACT_HOST_ACCOUNT}
@@ -206,7 +204,7 @@ function Provider(props) {
   );
   const printPicture = useCallback(
     async (picture) => {
-      // TODO: Implement the print.cdc transcation using "fcl.send".
+      //print transcation
       const transactionId = await fcl
         .send([
           fcl.transaction`
@@ -261,13 +259,16 @@ function Provider(props) {
     dispatch({type: 'setUser', payload: user});
   };
   const logIn = () => {
+    // login
     fcl.logIn();
   };
   const logOut = () => {
+    // logout
     fcl.unauthenticate();
   };
 
   useEffect(() => {
+    // subscribe current user
     fcl.currentUser().subscribe(setUser);
   }, []);
 
