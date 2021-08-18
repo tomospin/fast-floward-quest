@@ -215,7 +215,7 @@ function Provider(props) {
               let collectionRef: &{LocalArtist.PictureReceiver}
             
               prepare(account: AuthAccount) {
-                let printerRef = getAccount(0xc738f0e248c9da70)
+                let printerRef = getAccount(${process.env.REACT_APP_ARTIST_CONTRACT_HOST_ACCOUNT})
                   .getCapability<&LocalArtist.Printer>(/public/LocalArtistPicturePrinter)
                   .borrow()
                   ?? panic("Couldn't borrow printer reference.")
